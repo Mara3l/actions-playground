@@ -2,7 +2,7 @@
 set -e
 shopt -s extglob
 
-content_dir=multidocs
+content_dir=version_docs
 # Name of the remote hosting the main repo (gitlab.com/gooddata/gdc-tiger-docs)
 remote_name=${1:-origin}
 # target branch where changes will be applied (master, rel/0.7, ...)
