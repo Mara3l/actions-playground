@@ -20,20 +20,15 @@ runs:
       run: |
         cd docs
         ../scripts/generate.sh origin $THIS_BRANCH $KEEP_MASTER
+        - if [ "$THIS_BRANCH" != "master" ] ; then git checkout master ; fi
+        - |
+          cat << EOF
+          HUGO_ENV=$HUGO_ENV
+          THIS_BRANCH=$THIS_BRANCH
+          KEEP_MASTER=$KEEP_MASTER
+          EXTRA_HUGO_ARGS=$EXTRA_HUGO_ARGS
+          EOF
+        - npm install
+        - hugo version
+        - hugo --minify ${BASE_URL:+--baseURL $BASE_URL} $EXTRA_HUGO_ARGS
       shell: bash 
-    - name: Setup Hugo
-      uses: peaceiris/actions-hugo@v2
-      with:
-        hugo-version: '0.81.0'
-        extended: true
-    - name: Install dependencies
-      working-directory: ${{ inputs.working-directory }}
-      run: npm ci
-      shell: bash
-    - name: Build
-      working-directory: ${{ inputs.working-directory }}
-      env:
-        HUGO_ENV: ${{ inputs.hugo-env }}
-        BASE_URL: ${{ inputs.base-url }}
-      run: hugo --minify ${BASE_URL:+--baseURL $BASE_URL}
-      shell: bash
