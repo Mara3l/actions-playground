@@ -27,11 +27,11 @@ runs:
         hugo-version: '0.81.0'
         extended: true
     - name: Install dependencies
-      working-directory: versioned_docs
+      working-directory: docs
       run: npm install
       shell: bash
     - name: Build
-      working-directory: versioned_docs
+      working-directory: docs
       env:
         HUGO_ENV: ${{ inputs.hugo-env }}
         BASE_URL: ${{ inputs.base-url }}
