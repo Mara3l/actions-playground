@@ -1,7 +1,7 @@
 # Keep Hugo docs build to verify documentation can be built also on localhost with correct links
 name: Hugo docs
 on:
-  workflow-dispatch:
+  workflow_dispatch:
 jobs:
   hugo-check:
     runs-on: ubuntu-latest
