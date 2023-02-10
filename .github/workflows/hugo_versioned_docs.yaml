@@ -10,7 +10,7 @@ jobs:
         with:
           submodules: recursive
       - name: Generate Versioned Docs
-        uses: actions/hugo-build-versioned-action
+        uses: ./.github/actions/hugo-build-versioned-action
       - name: htmltest
         run: |
           scripts/htmltest -c docs/.htmltest.yml docs/public
