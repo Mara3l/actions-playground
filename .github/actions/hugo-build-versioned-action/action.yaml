@@ -28,7 +28,7 @@ runs:
         extended: true
     - name: Install dependencies
       working-directory: docs/versioned_docs
-      run: npm ci
+      run: npm install
       shell: bash
     - name: Build
       working-directory: docs/versioned_docs
