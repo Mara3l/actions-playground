@@ -20,7 +20,6 @@ runs:
       run: |
         cd docs
         ../scripts/generate.sh origin $THIS_BRANCH $KEEP_MASTER
-        - if [ "$THIS_BRANCH" != "master" ] ; then git checkout master ; fi
         - |
           cat << EOF
           HUGO_ENV=$HUGO_ENV
