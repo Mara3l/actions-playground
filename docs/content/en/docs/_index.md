@@ -1,86 +1,106 @@
 ---
-title: "Home"
-linkTitle: "Home"
+title: "Introduction"
+linkTitle: "Introduction"
 weight: 10
 sectionIndex: false
 ---
 
-## Learn
+GoodData Python SDK provides a clean and convenient way to interact with the [GoodData API](https://www.gooddata.com/developers/cloud-native/doc/cloud/api-and-sdk/api/) in Python applications.
 
-Start you GoodData.UI journey by hands-on experience:
+Python is a popular language for working with large amounts of data and data analytics; It is for this reason that we are actively developing this SDK to let Python developers integrate the GoodData analytical engine into their own applications as seamlessly as possible, or to automate their administrative workflow.
 
-{{< blocks/cards-container maxRow="2" >}}
-  {{< blocks/card sectionLink="/learn/integrate_and_authenticate" >}}
-  {{< /blocks/card >}}
+![Relationship to GoodData](./figures/Python_doc_flat.png)
 
-  {{< blocks/card sectionLink="/learn/get_data" >}}
-  {{< /blocks/card >}}
 
-  {{< blocks/card sectionLink="/learn/visualize_data" >}}
-  {{< /blocks/card >}}
 
-  {{< blocks/card sectionLink="/learn/embed_dashboards" >}}
-  {{< /blocks/card >}}
+## What is Python SDK Good For
 
-  {{< blocks/card sectionLink="/learn/create_custom_visualization" >}}
-  {{< /blocks/card >}}
 
-  {{< blocks/card sectionLink="/learn/add_interactivity" >}}
-  {{< /blocks/card >}}
-{{< /blocks/cards-container >}}
 
-## Supported Frameworks and APIs
+Python SDK lets you script things that may otherwise be very tedious to do using the GoodData user interface alone, such as:
 
-As a developer, make use of our development kits and API:
+#### Automate the provisioning
 
-{{< blocks/cards-container >}}
-  {{< blocks/card title="Web Components" icon="icon-python.svg" iconPosition="top" >}}
-  Develop Python applications using our analytical engine.
+You can perform administration tasks such as managing users, permissions and create new workspaces, their hierarchies and data sources. With Python SDK you can write scripts that will let you easily create new users and workspaces, as well as manage existing ones.
 
-  [Overview](./api-and-sdk/python-sdk/)
-  [Authentication](https://www.gooddata.com/docs/python-sdk/)
-  [Integration](https://gooddata-pandas.readthedocs.io/en/latest/)
-  {{< /blocks/card >}}
+```python
+sdk.catalog_data_source.create_or_update_data_source(
+    CatalogDataSourcePostgres(
+        id=data_source_id,
+        name=data_source_name,
+        db_specific_attributes=PostgresAttributes(
+            host=os.environ["POSTGRES_HOST"],
+            db_name=os.environ["POSTGRES_DBNAME"]
+        ),
+        schema=os.environ["POSTGRES_SCHEMA"],
+        credentials=BasicCredentials(
+            username=os.environ["POSTGRES_USER"],
+            password=os.environ["POSTGRES_PASSWORD"],
+        ),
+    )
+)
+```
 
-  {{< blocks/card title="Dashboard Plugins" icon="docs-icon.svg" iconPosition="top" >}}
-  Develop web applications with GoodData.UI React components.
+#### Integrate into CI/CD pipelines
 
-  [Overview](./api-and-sdk/react-sdk/)
-  [Getting Started](https://sdk.gooddata.com/gooddata-ui/docs/create_new_application.html)
-  [Plugin API](https://sdk.gooddata.com/gooddata-ui/docs/interactive_examples.html)
+Integrate GoodData analytics into your continuous delivery practices by, for example, automatically transplanting content from your staging workspaces to your production workspaces at an appropriate time in your production and delivery cycle.
 
-  {{< /blocks/card >}}
+```python
+# Reads visualizations from workspace
+insights = sdk.insights.get_insights("123")
 
-  {{< blocks/card title="API Docs" icon="icon-react.svg" iconPosition="top" >}}
-  General reference for using the GoodData REST API.
+# Iterate through visualizations and check if they are valid
+for insight in insights:
+    try:
+        sdk.tables.for_insight("123", insight)
+    except Exception:
+        print(f"Visualization {insight.title} is broken.")
 
-  [Overview](./api-and-sdk/api/)
-  [API Reference](./api-and-sdk/api/api_reference_all/)
-  {{< /blocks/card >}}
+```
 
-{{< /blocks/cards-container >}}
+#### Create data pipelines
 
-## Join & Learn
+Export your data, levarage services like machine learning to transform your data and import the data back into GoodData to visualize the results and gain insights. In the Example below, we demonstrate GoodPandas, which can leverage machine learning practices.
+```python
+pandas = GoodPandas(os.getenv('HOST'), os.getenv('TOKEN'))
+df = pandas.data_frames(workspace_id="123")
 
-Meet other GoodData developers, talk with us and learn:
+campaign_spend = df.for_insight("campaign_spend")
 
-{{< blocks/cards-container >}}
-  {{< blocks/card title="Slack Channel" icon="icon-react.svg" iconPosition="top" >}}
-  Meet other GoodData developers. Search our knowledge base.
+# Now you have a dataframe with data from your visualization
+# You can do linear regression, clustering, predictions, analysis, etc.
+```
 
-  [Join us on Slack](https://join.slack.com/t/gooddataconnect/shared_invite/zt-mkqhg6bm-omgjndejTlTyB3wgaVkkGQ)
-  {{< /blocks/card >}}
 
-  {{< blocks/card title="Community" icon="icon-react.svg" iconPosition="top" >}}
-  Find answers, share ideas, be inspired and inspire others!
+![Relationship to GoodData](./figures/Python_doc_isometric.png)
 
-  [Check community](https://community.gooddata.com/)
-  {{< /blocks/card >}}
+### What is Python SDK Not Good For
 
-  {{< blocks/card title="University" icon="icon-react.svg" iconPosition="top" >}}
-  Learn how to use GoodData with our hands-on tutorials.
+Python SDK is not designed to facilitate the embedding of GoodData analytics into the front-end of your web applications. For customizable embedding of visualizations and dashboard, see our [React SDK](https://sdk.gooddata.com/gooddata-ui/docs/about_gooddataui.html).
 
-  [Do our courses](https://university.gooddata.com/page/gooddatacn/)
-  {{< /blocks/card >}}
+## What Can I Do With Python SDK
 
-{{< /blocks/cards-container >}}
+With Python SDK you have full control over:
+
+* Workspaces
+  * Workspace hierarchies
+  * Workspace data filters
+* Data sources
+* Logical data models
+* Workspace content
+  * Facts
+  * Attributes
+  * Labels
+  * Metrics
+  * Visualizations
+
+You can also perform certain administration tasks:
+
+* Manage users and user groups
+* Manage workspace permissions and hierarchyPermissions
+
+## Where to Learn More
+
+Get started with Python SDK right now by following the [Quick Start](./getting-started/#quick-start) guide.
+
+New to GoodData? Follow the [Getting Started](https://www.gooddata.com/developers/cloud-native/doc/cloud/getting-started/) series of articles that include Python SDK code examples.
