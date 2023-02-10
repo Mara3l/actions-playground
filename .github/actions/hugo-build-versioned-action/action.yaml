@@ -20,14 +20,7 @@ runs:
       run: |
         cd docs
         ../scripts/generate.sh origin $THIS_BRANCH $KEEP_MASTER
-        - |
-          cat << EOF
-          HUGO_ENV=$HUGO_ENV
-          THIS_BRANCH=$THIS_BRANCH
-          KEEP_MASTER=$KEEP_MASTER
-          EXTRA_HUGO_ARGS=$EXTRA_HUGO_ARGS
-          EOF
-        - npm install
-        - hugo version
-        - hugo --minify ${BASE_URL:+--baseURL $BASE_URL} $EXTRA_HUGO_ARGS
+        npm install
+        hugo version
+        hugo --minify ${BASE_URL:+--baseURL $BASE_URL} $EXTRA_HUGO_ARGS
       shell: bash 
