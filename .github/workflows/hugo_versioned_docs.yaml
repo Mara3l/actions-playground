@@ -1,4 +1,4 @@
-name: Hugo versioned docs
+name: Hugo Versioned Docs
 on:
   workflow_dispatch:
 jobs:
