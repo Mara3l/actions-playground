@@ -1,0 +1,13 @@
+{{ $icon := .Get "icon" }}
+{{ $name := .Get "name" }}
+{{ $_ref := .Get "_ref" }}
+<div class="intro__tile">
+{{ if $icon }}
+<div class="homepage-card__icon">
+{{ readFile $icon | safeHTML }}
+</div>
+{{ end }}
+<h2>{{ $name }}</h2>
+<p>{{ .Inner }}</p>
+<p><a href="{{ $_ref}}">Learn more</a></p>
+</div>

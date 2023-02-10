@@ -1,0 +1,18 @@
+# Redirects
+{{ $latestVersion := "cloud" }}
+{{ if .Site.Params.versions }}
+    {{ $latestVersion = (index (where .Site.Params.versions "dirpath" "!=" $latestVersion) 0).dirpath }}
+{{ end }}
+
+# Redirect homepage to Cloud version
+/ {{ .Site.BaseURL }}/cloud/ 301!
+
+# Redirect for missing Tiger article
+/1.7/administration/modeler/ {{ .Site.BaseURL }}/1.7/data/ 301
+/latest/installation/k8s/ {{ .Site.BaseURL }}/latest/deploy-and-install/cloud-native/ 301
+
+# Redirect /latest to the latest numbered version
+/latest/* {{ .Site.BaseURL }}/{{ $latestVersion }}/:splat 301
+
+# Tiger docs /hosted to /cloud renaming
+/hosted/* {{ .Site.BaseURL }}/cloud/:splat 301!
