@@ -1,0 +1,13 @@
+.idea
+*.iml
+.DS_Store
+docs/node_modules
+docs/public
+docs/resources/_gen
+docs/tmp/
+docs/multidocs
+docs/.hugo_build.lock
+bin/
+
+# Local Netlify folder
+.netlify
