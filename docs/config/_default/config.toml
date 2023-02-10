@@ -1,5 +1,5 @@
 theme = ["docsy"]
-contentDir = "content/en"
+contentDir = "versioned_docs"
 defaultContentLanguage = "en"
 defaultContentLanguageInSubdir = false
 
