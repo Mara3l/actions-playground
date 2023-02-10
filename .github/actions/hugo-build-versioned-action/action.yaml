@@ -20,7 +20,7 @@ runs:
       run: |
         cd docs
         ../scripts/generate.sh origin $THIS_BRANCH $KEEP_MASTER
-        npm install
-        hugo version
-        hugo --minify ${BASE_URL:+--baseURL $BASE_URL} $EXTRA_HUGO_ARGS
+        - npm install
+        - hugo version
+        - hugo --minify ${BASE_URL:+--baseURL $BASE_URL} $EXTRA_HUGO_ARGS
       shell: bash 
